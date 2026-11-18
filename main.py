@@ -1,53 +1,35 @@
+
 import pyvista as pv
 
-pv.set_jupyter_backend("client")
+# Create a 3D cube
+cube = pv.Cube(
+    center=(0, 0, 0),
+    x_length=2,
+    y_length=2,
+    z_length=2
+)
 
-# Available 3D objects
-objects = {
-    "Cube": pv.Cube(
-        center=(0, 0, 0),
-        x_length=2,
-        y_length=2,
-        z_length=2
-    ),
-    "Sphere": pv.Sphere(
-        radius=1,
-        theta_resolution=48,
-        phi_resolution=48
-    ),
-    "Cylinder": pv.Cylinder(
-        radius=1,
-        height=2
-    ),
-    "Cone": pv.Cone(
-        height=2,
-        radius=1
-    ),
-    "Torus": pv.ParametricTorus()
-}
-
-# Select an Object
-selected_object = "Cube"
-
-# Create browser viewer
+# Create a desktop visualization window
 plotter = pv.Plotter(
-    notebook=True,
+    title="Interactive 3D Viewer",
     window_size=(1000, 700)
 )
 
-plotter.set_background("#1e1e1e")
-
+# Add the cube
 plotter.add_mesh(
-    objects[selected_object],
+    cube,
     color="royalblue",
     show_edges=True,
     edge_color="black",
     smooth_shading=True
 )
 
+# Add reference axes and a grid
 plotter.add_axes()
 plotter.show_grid()
-plotter.camera_postition = "iso"
 
-#display interative scene
-plotter.show(jupyter_backend="client")
+# Set the starting camera position
+plotter.camera_position = "iso"
+
+# Open the interactive window
+plotter.show()
